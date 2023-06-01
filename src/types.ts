@@ -3,3 +3,9 @@ export enum GameState {
     Playing,
     End,
 }
+
+export enum CharacterState {
+    Stay,
+    MoveLeft,
+    MoveRight,
+}
