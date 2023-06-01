@@ -1,6 +1,7 @@
 <template>
     <Stage :width="800" :height="600" :background-color="0x2980b9">
         <container>
+            <sprite :texture="gameBg" />
             <ComponentView @changeGameState="handleChangeGameState"></ComponentView>
         </container>
     </Stage>
@@ -15,6 +16,7 @@ import { GameState } from '@/types';
 import StartView from '@/scenes/StartScene.vue';
 import GameView from '@/scenes/GameScene.vue';
 import EndView from '@/scenes/EndScene.vue';
+import gameBg from '@/assets/images/gameBg.jpg';
 
 const gameState = ref(GameState.Start);
 

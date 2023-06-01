@@ -30,6 +30,12 @@ body {
     place-items: center;
     min-width: 320px;
     min-height: 100vh;
+    background-attachment: fixed;
+    background-color: #c62e00;
+    background-image: url(/bg.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 h1 {
@@ -62,8 +68,15 @@ button:focus-visible {
 
 #app {
     margin: 0 auto;
-    padding: 2rem;
+    padding: 20px;
     text-align: center;
+    background: #651701;
+    border-radius: 30px;
+    display: flex;
+}
+
+#app canvas {
+    border-radius: 20px;
 }
 
 @media (prefers-color-scheme: light) {
