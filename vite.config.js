@@ -1,6 +1,8 @@
 import path from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import { transformAssetUrls } from 'vue3-pixi';
+import { isCustomElement } from '@vue-pixi/renderer/dist/compiler.js';
 
 export default defineConfig({
     base: '/',
@@ -9,11 +11,6 @@ export default defineConfig({
     },
     build: {
         target: 'esnext',
-        rollupOptions: {
-            input: {
-                index: path.resolve(__dirname, 'index.html'),
-            },
-        },
     },
     resolve: {
         extensions: ['.js', '.ts', '.tsx', '.json', '.vue', '.jsx'],
@@ -21,5 +18,14 @@ export default defineConfig({
             '@': path.resolve(__dirname, './src'),
         },
     },
-    plugins: [vue()],
+    plugins: [
+        vue({
+            template: {
+                transformAssetUrls,
+                compilerOptions: {
+                    isCustomElement,
+                },
+            },
+        }),
+    ],
 });

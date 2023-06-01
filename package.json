@@ -1,6 +1,7 @@
 {
   "name": "pixi-catch",
   "version": "1.0.0",
+  "type": "module",
   "description": "Pixi.js - catch game",
   "main": "dist/app.js",
   "scripts": {

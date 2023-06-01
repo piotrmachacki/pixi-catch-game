@@ -3,7 +3,7 @@
         "target": "esnext",
         "module": "esnext",
         "allowSyntheticDefaultImports": false,
-        "baseUrl": ".",
+        "baseUrl": "./src",
         "paths": {
             "@/*": ["./src/*"],
         }
