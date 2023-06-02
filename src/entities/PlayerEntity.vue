@@ -8,18 +8,22 @@
 
 
 <script setup lang="ts">
+import type { Resource as ResourceType, Texture as TextureType } from 'pixi.js';
 import { ref, onMounted, Ref as RefType } from 'vue';
 import { useMagicKeys } from '@vueuse/core';
-import type { Resource as ResourceType, Texture as TextureType } from 'pixi.js';
 import { BaseTexture, Rectangle, Texture } from 'pixi.js';
 import { useScreen, useApplication } from 'vue3-pixi';
-import knightChar from '@/assets/images/knightChar.png';
+
+import playerSprite from '@/assets/images/playerSprite.png';
+
 import { CharacterState } from '@/types';
+
+import { setNumberInRange } from '@/utils';
 
 const screen = useScreen();
 const pixiApp = useApplication();
 
-const characterTexture = BaseTexture.from(knightChar);
+const characterTexture = BaseTexture.from(playerSprite);
 const characterX: RefType<number> = ref(screen.value.width / 2);
 const characterY: number = screen.value.height - 90;
 const characterSpeed = 10;
@@ -62,12 +66,7 @@ const characterState = ref(CharacterState.Stay);
 const { arrowleft, arrowright } = useMagicKeys();
 
 const setCharacterXPosition = (x: number) => {
-    const min = 30;
-    const max = screen.value.width - 30;
-    let position = characterX.value + x;
-    if (position < min) position = min;
-    if (position > max) position = max;
-    characterX.value = position;
+    characterX.value = setNumberInRange(characterX.value + x, 30, screen.value.width - 30);
 };
 
 onMounted(() => {
