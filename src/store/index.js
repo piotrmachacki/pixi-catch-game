@@ -43,7 +43,6 @@ export const useStore = defineStore('game', {
             this.life = this.maxLife;
             this.score = 0;
             this.level = 1;
-            this.gameState = GameState.Start;
         },
     },
 });

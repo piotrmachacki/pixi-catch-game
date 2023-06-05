@@ -15,7 +15,7 @@
 
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { Stage, Assets, AssetsResolvers, useScreen } from 'vue3-pixi';
 import { storeToRefs } from 'pinia';
 import { Texture as TextureType, Resource as ResourceType } from 'pixi.js';
@@ -57,6 +57,10 @@ const ComponentView = computed(() => {
 function onResolved(textures: Record<string, TextureType<ResourceType>>) {
     store.setTextures(textures);
 }
+
+watch(gameState, () => {
+    if (gameState.value === GameState.Playing) store.startNewGame();
+});
 
 </script>
 

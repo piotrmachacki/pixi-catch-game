@@ -8,7 +8,7 @@
 
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { Rectangle } from 'pixi.js';
 import { useApplication } from 'vue3-pixi';
 import { useStore } from '@/store';
