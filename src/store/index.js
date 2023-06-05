@@ -14,6 +14,7 @@ export const useStore = defineStore('game', {
     getters: {
         getGameState: (state) => state.GameState,
         getTextures: (state) => state.textures,
+        getTexture: (state) => (textureName) => state.textures[textureName],
         getLife: (state) => state.life,
         getMaxLife: (state) => state.maxLife,
         getScore: (state) => state.score,

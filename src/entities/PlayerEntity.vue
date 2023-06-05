@@ -11,19 +11,19 @@
 import type { Resource as ResourceType, Texture as TextureType } from 'pixi.js';
 import { ref, onMounted, onBeforeUnmount, Ref as RefType } from 'vue';
 import { useMagicKeys } from '@vueuse/core';
-import { BaseTexture, Rectangle, Texture } from 'pixi.js';
+import { Rectangle, Texture } from 'pixi.js';
 import { useScreen, useApplication } from 'vue3-pixi';
-
-import playerSprite from '@/assets/images/playerSprite.png';
 
 import { CharacterState } from '@/types/types';
 
 import { setNumberInRange } from '@/utils';
+import { useStore } from '@/store';
 
 const screen = useScreen();
 const pixiApp = useApplication();
+const store = useStore();
 
-const characterTexture = BaseTexture.from(playerSprite);
+const characterTexture = store.textures.playerSprite.baseTexture;
 const characterX: RefType<number> = ref(screen.value.width / 2);
 const characterY: number = screen.value.height - 90;
 const characterSpeed = 10;

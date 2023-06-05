@@ -8,13 +8,14 @@
 <script setup lang="ts">
 import type { Texture as TextureType } from 'pixi.js';
 import { ref, Ref as RefType } from 'vue';
-import { BaseTexture, Rectangle, Texture } from 'pixi.js';
-
-import explosionSprite from '@/assets/images/explosionSprite.png';
+import { Rectangle, Texture } from 'pixi.js';
 
 import { ExplosionType } from '@/types/types';
+import { useStore } from '@/store';
 
-const explosionTexture = BaseTexture.from(explosionSprite);
+const store = useStore();
+
+const explosionTexture = store.textures.explosionSprite.baseTexture;
 
 let explosionFrames: TextureType[] = [];
 for (let j = 0; j < 4; j++) {

@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import type { Texture as TextureType } from 'pixi.js';
 import { ref, onMounted, onBeforeUnmount, Ref as RefType } from 'vue';
-import { BaseTexture, Rectangle, Texture } from 'pixi.js';
+import { Rectangle, Texture } from 'pixi.js';
 import { useScreen, useApplication } from 'vue3-pixi';
 import { useStore } from '@/store';
 
@@ -16,14 +16,13 @@ import { BoundsType, FallingFoodType } from '@/types/types';
 
 import { getRandomInt, setNumberInRange } from '@/utils';
 
-import foodSprite from '@/assets/images/foodSprite.png';
-
 const store = useStore();
 const screen = useScreen();
 const pixiApp = useApplication();
 const desiredObjectCount = 10;
 
-const foodTexture = BaseTexture.from(foodSprite);
+
+const foodTexture = store.textures.foodSprite.baseTexture;
 
 let foodFrames: TextureType[] = [];
 for (let i = 0; i < 23; i++) {
