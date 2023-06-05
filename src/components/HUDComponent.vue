@@ -19,8 +19,3 @@ import { useStore } from '@/store';
 const screen = useScreen();
 const store = useStore();
 </script>
-
-
-
-<style scoped>
-</style>

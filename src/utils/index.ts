@@ -14,3 +14,6 @@ export function setNumberInRange(
     if (currentNumber > max) currentNumber = max;
     return currentNumber;
 }
+
+export const uuid = (): string =>
+    `uuid-${Math.random().toString(36).substring(2)}`;

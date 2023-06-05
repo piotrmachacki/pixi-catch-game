@@ -11,8 +11,3 @@
 import HUDComponent from '@/components/HUDComponent.vue';
 import GameComponent from '@/components/GameComponent.vue';
 </script>
-
-
-
-<style scoped>
-</style>

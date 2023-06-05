@@ -18,7 +18,7 @@ interface BoundsType {
 }
 
 interface FallingFoodType {
-    id: number;
+    id: string;
     texture: TextureType;
     x: number;
     y: number;
@@ -27,7 +27,7 @@ interface FallingFoodType {
 }
 
 interface ExplosionType {
-    id: number;
+    id: string;
     x: number;
     y: number;
 }

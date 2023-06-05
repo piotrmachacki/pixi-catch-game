@@ -18,8 +18,3 @@ function startGame() {
     store.setGameState(GameState.Playing);
 }
 </script>
-
-
-
-<style scoped>
-</style>

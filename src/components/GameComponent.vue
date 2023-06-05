@@ -36,7 +36,6 @@ function checkCollision() {
             return new Rectangle(x, y, width, height);
         })();
         if (rectangleCharacter.intersects(rectangleFoot)) {
-            console.log('Kolizja!');
             foodsElement.value.foods.splice(i, 1); // Remove the object from the array
             store.addScore(1);
         }
@@ -52,8 +51,3 @@ onBeforeUnmount(() => {
 });
 
 </script>
-
-
-
-<style scoped>
-</style>

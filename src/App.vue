@@ -63,8 +63,3 @@ watch(gameState, () => {
 });
 
 </script>
-
-
-
-<style scoped>
-</style>

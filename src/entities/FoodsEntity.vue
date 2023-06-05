@@ -14,7 +14,7 @@ import { useStore } from '@/store';
 
 import { BoundsType, FallingFoodType } from '@/types/types';
 
-import { getRandomInt, setNumberInRange } from '@/utils';
+import { getRandomInt, setNumberInRange, uuid } from '@/utils';
 
 const store = useStore();
 const screen = useScreen();
@@ -34,7 +34,7 @@ const fallingFoods: RefType<FallingFoodType[]> = ref([]);
 
 const spawnFallingFood = (): void => {
     const foodObject = {
-        id: Math.random(),
+        id: uuid(),
         texture: foodFrames[getRandomInt(0, foodFrames.length - 1)],
         x: setNumberInRange(Math.random() * screen.value.width, 16, screen.value.width - 16),
         y: -(getRandomInt(50, 500)), // Start position above the screen,
@@ -46,12 +46,12 @@ const spawnFallingFood = (): void => {
 
 const updateFallingFoods = (): void => {
     for (let i = fallingFoods.value.length - 1; i >= 0; i--) {
-        const object = fallingFoods.value[i];
-        object.y += object.speed;
+        const foodObject = fallingFoods.value[i];
+        foodObject.y += foodObject.speed;
 
         // Check if the object has reached the bottom of the screen
-        if (object.y > screen.value.height - 32) {
-            // const explosion = { id: Math.random(), x: object.x, y: object.y };
+        if (foodObject.getBounds().y > screen.value.height - 32) {
+            // const explosion = { id: uuid(), x: foodObject.x, y: foodObject.y };
             // explosions.value.push(explosion);
             fallingFoods.value.splice(i, 1); // Remove the object from the array
             store.reduceLife();
@@ -60,7 +60,6 @@ const updateFallingFoods = (): void => {
 
     // Check if there are fewer objects than desired
     if (fallingFoods.value.length < desiredObjectCount) {
-        // setTimeout(spawnFallingFood, 100);
         spawnFallingFood();
     }
 };

@@ -2,15 +2,18 @@ import { defineStore } from 'pinia';
 import { GameState } from '@/types/types';
 
 export const useStore = defineStore('game', {
-    state: () => ({
-        gameState: GameState.Start,
-        textures: null,
-        maxLife: 3,
-        life: 3,
-        score: 0,
-        highScore: 0,
-        level: 1,
-    }),
+    state: () => {
+        const MAX_LIFE = 3;
+        return {
+            gameState: GameState.Start,
+            textures: null,
+            maxLife: MAX_LIFE,
+            life: MAX_LIFE,
+            score: 0,
+            highScore: 0,
+            level: 1,
+        };
+    },
     getters: {
         getGameState: (state) => state.GameState,
         getTextures: (state) => state.textures,
