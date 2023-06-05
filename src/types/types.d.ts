@@ -10,14 +10,14 @@ export enum CharacterState {
     MoveRight,
 }
 
-interface BoundsType {
+export interface BoundsType {
     x: number;
     y: number;
     width: number;
     height: number;
 }
 
-interface FallingFoodType {
+export interface FallingFoodType {
     id: string;
     texture: TextureType;
     x: number;
@@ -26,7 +26,7 @@ interface FallingFoodType {
     getBounds: () => BoundsType;
 }
 
-interface ExplosionType {
+export interface ExplosionType {
     id: string;
     x: number;
     y: number;

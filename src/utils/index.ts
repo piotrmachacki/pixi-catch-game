@@ -15,5 +15,5 @@ export function setNumberInRange(
     return currentNumber;
 }
 
-export const uuid = (): string =>
-    `uuid-${Math.random().toString(36).substring(2)}`;
+export const uuid = (prefix = 'uuid'): string =>
+    `${prefix}_${Math.random().toString(36).substring(2)}`;

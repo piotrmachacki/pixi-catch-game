@@ -12,7 +12,7 @@ import { Rectangle, Texture } from 'pixi.js';
 import { useScreen, useApplication } from 'vue3-pixi';
 import { useStore } from '@/store';
 
-import { BoundsType, FallingFoodType } from '@/types/types';
+import { BoundsType, FallingFoodType, ExplosionType } from '@/types/types';
 
 import { getRandomInt, setNumberInRange, uuid } from '@/utils';
 
@@ -21,6 +21,9 @@ const screen = useScreen();
 const pixiApp = useApplication();
 const desiredObjectCount = 10;
 
+const emit = defineEmits<{
+    (event: 'hitFloor', data: ExplosionType): void;
+}>();
 
 const foodTexture = store.textures.foodSprite.baseTexture;
 
@@ -34,12 +37,13 @@ const fallingFoods: RefType<FallingFoodType[]> = ref([]);
 
 const spawnFallingFood = (): void => {
     const foodObject = {
-        id: uuid(),
+        id: uuid('food'),
         texture: foodFrames[getRandomInt(0, foodFrames.length - 1)],
         x: setNumberInRange(Math.random() * screen.value.width, 16, screen.value.width - 16),
         y: -(getRandomInt(50, 500)), // Start position above the screen,
         speed: Math.random() * 1 + 0.5,
         getBounds(): BoundsType { return { x: this.x - 16, y: this.y - 16, width: this.texture.width, height: this.texture.height }; }
+
     };
     fallingFoods.value.push(foodObject);
 };
@@ -50,11 +54,10 @@ const updateFallingFoods = (): void => {
         foodObject.y += foodObject.speed;
 
         // Check if the object has reached the bottom of the screen
-        if (foodObject.getBounds().y > screen.value.height - 32) {
-            // const explosion = { id: uuid(), x: foodObject.x, y: foodObject.y };
-            // explosions.value.push(explosion);
+        if (foodObject.getBounds().y > screen.value.height - foodObject.getBounds().height - 16) { // 16px above the floor
             fallingFoods.value.splice(i, 1); // Remove the object from the array
             store.reduceLife();
+            emit('hitFloor', { id: uuid('explosion'), ...foodObject.getBounds() });
         }
     }
 

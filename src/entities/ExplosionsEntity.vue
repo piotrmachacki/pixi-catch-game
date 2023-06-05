@@ -1,18 +1,19 @@
 <template>
     <container>
-        <animated-sprite v-for="(explosion, index) in explosions" :key="explosion.id" :visible="true" :textures="explosionFrames" :x="explosion.x" :y="explosion.y" :play="true" :anchor="0.5" :animation-speed="1" :loop="false" @onComplete="removeExplosion(index)" />
     </container>
 </template>
 
 
 <script setup lang="ts">
 import type { Texture as TextureType } from 'pixi.js';
-import { ref, Ref as RefType } from 'vue';
-import { Rectangle, Texture } from 'pixi.js';
+import { ref, Ref as RefType, watch } from 'vue';
+import { Rectangle, Texture, AnimatedSprite } from 'pixi.js';
+import { useApplication } from 'vue3-pixi';
 
 import { ExplosionType } from '@/types/types';
 import { useStore } from '@/store';
 
+const pixiApp = useApplication();
 const store = useStore();
 
 const explosionTexture = store.textures.explosionSprite.baseTexture;
@@ -25,9 +26,27 @@ for (let j = 0; j < 4; j++) {
     }
 }
 
-function removeExplosion(i: number) {
-    explosions.value.splice(i, 1); // Remove the object from the array
+const explosions: RefType<ExplosionType[]> = ref([]);
+
+let animatedSprite: RefType<AnimatedSprite | null> = ref(null);
+
+function addAnimatedSprite() {
+    for (let i = 0; i < explosions.value.length; i++) {
+        const explosion: ExplosionType = explosions.value[i];
+        animatedSprite.value = new AnimatedSprite(explosionFrames);
+        animatedSprite.value.loop = false;
+        animatedSprite.value.x = explosion.x;
+        animatedSprite.value.y = explosion.y;
+        animatedSprite.value.onComplete = () => {
+            explosions.value.splice(i, 1); // Remove the object from the array
+            if (animatedSprite.value) pixiApp.value?.stage.removeChild(animatedSprite.value);
+        };
+        pixiApp.value?.stage.addChild(animatedSprite.value);
+        animatedSprite.value.play();
+    }
 }
 
-const explosions: RefType<ExplosionType[]> = ref([]);
+watch(explosions, addAnimatedSprite, { deep: true });
+
+defineExpose({ explosions });
 </script>
