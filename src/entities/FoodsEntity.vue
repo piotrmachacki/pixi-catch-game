@@ -12,7 +12,7 @@ import { Rectangle, Texture } from 'pixi.js';
 import { useScreen, useApplication } from 'vue3-pixi';
 import { useStore } from '@/store';
 
-import { BoundsType, FallingFoodType, ExplosionType } from '@/types/types';
+import { BoundsType, FallingFoodType } from '@/types/types';
 
 import { getRandomInt, setNumberInRange, uuid } from '@/utils';
 
