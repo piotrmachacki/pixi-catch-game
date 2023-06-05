@@ -10,11 +10,13 @@ import type { Texture as TextureType } from 'pixi.js';
 import { ref, onMounted, Ref as RefType } from 'vue';
 import { BaseTexture, Rectangle, Texture } from 'pixi.js';
 import { useScreen, useApplication } from 'vue3-pixi';
+import { useStore } from '@/store';
 
 import { getRandomInt, setNumberInRange } from '@/utils';
 
 import foodSprite from '@/assets/images/foodSprite.png';
 
+const store = useStore();
 const screen = useScreen();
 const pixiApp = useApplication();
 const desiredObjectCount = 10;
@@ -66,6 +68,7 @@ const updateFallingFoods = (): void => {
         // Check if the object has reached the bottom of the screen
         if (object.y > screen.value.height - 32) {
             fallingFoods.value.splice(i, 1); // Remove the object from the array
+            store.reduceLife();
         }
     }
 

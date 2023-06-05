@@ -8,12 +8,17 @@
 
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { Rectangle } from 'pixi.js';
 import { useApplication } from 'vue3-pixi';
+import { storeToRefs } from 'pinia';
+import { useStore } from '@/store';
+import { GameState } from '@/types';
 
 import PlayerEntity from '@/entities/PlayerEntity.vue';
 import FoodsEntity from '@/entities/FoodsEntity.vue';
+
+const store = useStore();
 
 const playerElement = ref<InstanceType<typeof PlayerEntity> | null>(null);
 const foodsElement = ref<InstanceType<typeof FoodsEntity> | null>(null);
@@ -35,12 +40,28 @@ function checkCollision() {
         if (rectangleCharacter.intersects(rectangleFoot)) {
             console.log('Kolizja!');
             foodsElement.value.foods.splice(i, 1); // Remove the object from the array
+            store.addScore(1);
         }
     }
 }
 
 onMounted(() => {
     pixiApp.value?.ticker.add(checkCollision);
+});
+
+const emit = defineEmits<{
+    (event: 'changeGameState', data: GameState): void;
+}>();
+
+function endGame() {
+    emit('changeGameState', GameState.End);
+}
+
+const { gameOver } = storeToRefs(store);
+
+watch(gameOver, () => {
+    console.log('Game Over!!!!!!!!');
+    endGame();
 });
 </script>
 
