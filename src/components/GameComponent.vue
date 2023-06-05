@@ -1,7 +1,7 @@
 <template>
     <container>
         <PlayerEntity ref="playerElement" />
-        <FoodsEntity ref="foodsElement" @hitFloor="setExplosion" />
+        <FoodsEntity ref="foodsElement" @hitFloor="hitFloor" />
         <ExplosionsEntity ref="explosionsEntity" />
         <CoinsEntity ref="coinsEntity" />
     </container>
@@ -10,12 +10,12 @@
 
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { Rectangle } from 'pixi.js';
 import { useApplication } from 'vue3-pixi';
 import { useStore } from '@/store';
 
-import { ExplosionType, CoinType } from '@/types/types';
+import { FallingFoodType, ExplosionType, CoinType } from '@/types/types';
 
 import PlayerEntity from '@/entities/PlayerEntity.vue';
 import FoodsEntity from '@/entities/FoodsEntity.vue';
@@ -59,6 +59,10 @@ onMounted(() => {
 onBeforeUnmount(() => {
     pixiApp.value?.ticker.remove(checkCollision);
 });
+
+function hitFloor(foodObject: FallingFoodType) {
+    setExplosion({ id: uuid('explosion'), ...foodObject.getBounds().center });
+}
 
 function setExplosion(data: ExplosionType) {
     explosionsEntity.value?.explosions.push(data);

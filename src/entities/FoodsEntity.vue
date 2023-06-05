@@ -22,7 +22,7 @@ const pixiApp = useApplication();
 const desiredObjectCount = 10;
 
 const emit = defineEmits<{
-    (event: 'hitFloor', data: ExplosionType): void;
+    (event: 'hitFloor', data: FallingFoodType): void;
 }>();
 
 const foodTexture = store.textures.foodSprite.baseTexture;
@@ -57,7 +57,7 @@ const updateFallingFoods = (): void => {
         if (foodObject.getBounds().y > screen.value.height - foodObject.getBounds().height - 16) { // 16px above the floor
             fallingFoods.value.splice(i, 1); // Remove the object from the array
             store.reduceLife();
-            emit('hitFloor', { id: uuid('explosion'), ...foodObject.getBounds() });
+            emit('hitFloor', foodObject);
         }
     }
 

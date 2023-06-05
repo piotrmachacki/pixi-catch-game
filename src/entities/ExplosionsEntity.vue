@@ -28,21 +28,20 @@ for (let j = 0; j < 4; j++) {
 
 const explosions: RefType<ExplosionType[]> = ref([]);
 
-let animatedSprite: RefType<AnimatedSprite | null> = ref(null);
-
 function addAnimatedSprite() {
     for (let i = 0; i < explosions.value.length; i++) {
         const explosion: ExplosionType = explosions.value[i];
-        animatedSprite.value = new AnimatedSprite(explosionFrames);
-        animatedSprite.value.loop = false;
-        animatedSprite.value.x = explosion.x;
-        animatedSprite.value.y = explosion.y;
-        animatedSprite.value.onComplete = () => {
+        const animatedSprite: AnimatedSprite = new AnimatedSprite(explosionFrames);
+        animatedSprite.loop = false;
+        animatedSprite.x = explosion.x;
+        animatedSprite.y = explosion.y;
+        animatedSprite.anchor.set(0.5, 0.5);
+        animatedSprite.onComplete = () => {
             explosions.value.splice(i, 1); // Remove the object from the array
-            if (animatedSprite.value) pixiApp.value?.stage.removeChild(animatedSprite.value);
+            if (animatedSprite) pixiApp.value?.stage.removeChild(animatedSprite);
         };
-        pixiApp.value?.stage.addChild(animatedSprite.value);
-        animatedSprite.value.play();
+        pixiApp.value?.stage.addChild(animatedSprite);
+        animatedSprite.play();
     }
 }
 
