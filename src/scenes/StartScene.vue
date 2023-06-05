@@ -12,15 +12,13 @@ import { useScreen } from 'vue3-pixi';
 import { GameState } from '@/types/types';
 import gameLogo from '@/assets/images/gameLogo.png';
 import playBtn from '@/assets/images/playBtn.png';
+import { useStore } from '@/store';
 
 const screen = useScreen();
-
-const emit = defineEmits<{
-    (event: 'changeGameState', data: GameState): void;
-}>();
+const store = useStore();
 
 function startGame() {
-    emit('changeGameState', GameState.Playing);
+    store.setGameState(GameState.Playing);
 }
 </script>
 

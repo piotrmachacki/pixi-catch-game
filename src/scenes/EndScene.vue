@@ -15,12 +15,8 @@ import { useStore } from '@/store';
 const screen = useScreen();
 const store = useStore();
 
-const emit = defineEmits<{
-    (event: 'changeGameState', data: GameState): void;
-}>();
-
 function startGame() {
-    emit('changeGameState', GameState.Playing);
+    store.setGameState(GameState.Playing);
 }
 </script>
 

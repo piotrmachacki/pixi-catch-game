@@ -11,9 +11,7 @@
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { Rectangle } from 'pixi.js';
 import { useApplication } from 'vue3-pixi';
-import { storeToRefs } from 'pinia';
 import { useStore } from '@/store';
-import { GameState } from '@/types/types';
 
 import PlayerEntity from '@/entities/PlayerEntity.vue';
 import FoodsEntity from '@/entities/FoodsEntity.vue';
@@ -53,20 +51,6 @@ onBeforeUnmount(() => {
     pixiApp.value?.ticker.remove(checkCollision);
 });
 
-const emit = defineEmits<{
-    (event: 'changeGameState', data: GameState): void;
-}>();
-
-function endGame() {
-    emit('changeGameState', GameState.End);
-}
-
-const { gameOver } = storeToRefs(store);
-
-watch(gameOver, () => {
-    console.log('Game Over!!!!!!!!');
-    endGame();
-});
 </script>
 
 

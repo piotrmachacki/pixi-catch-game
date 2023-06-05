@@ -3,7 +3,7 @@
         <Assets :resolves="resolves" #default="{ textures, progress }">
             <container v-if="textures">
                 <sprite :texture="textures.gameBg" />
-                <ComponentView @changeGameState="handleChangeGameState"></ComponentView>
+                <ComponentView />
             </container>
             <text v-else :anchor="0.5" :position="{ x: screen.width / 2, y: screen.height / 2 }" :style="{ fill: 'white', fontFamily: 'Comic Sans MS' }">
                 Loading... {{ (progress * 100).toFixed() }}%
@@ -15,8 +15,9 @@
 
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { Stage, Assets, AssetsResolvers, useScreen } from 'vue3-pixi';
+import { storeToRefs } from 'pinia';
 
 import { useStore } from '@/store';
 import { GameState } from '@/types/types';
@@ -32,7 +33,7 @@ const resolves: AssetsResolvers = {
     gameBg: import('@/assets/images/gameBg.jpg'),
 };
 
-const gameState = ref(GameState.Start);
+const { gameState } = storeToRefs(store);
 
 const ComponentView = computed(() => {
     switch (gameState.value) {
@@ -46,11 +47,6 @@ const ComponentView = computed(() => {
             return GameState.Start;
     }
 });
-
-function handleChangeGameState(state: GameState) {
-    gameState.value = state;
-    if (gameState.value === GameState.Playing) store.startNewGame();
-}
 
 </script>
 

@@ -1,31 +1,35 @@
 import { defineStore } from 'pinia';
+import { GameState } from '@/types/types';
 
 export const useStore = defineStore('game', {
     state: () => ({
+        gameState: GameState.Start,
         textures: null,
         maxLife: 3,
         life: 3,
         score: 0,
         highScore: 0,
         level: 1,
-        gameOver: false,
     }),
     getters: {
+        getGameState: (state) => state.GameState,
         getTextures: (state) => state.textures,
         getLife: (state) => state.life,
         getMaxLife: (state) => state.maxLife,
         getScore: (state) => state.score,
         getHighScore: (state) => state.highScore,
         getLevel: (state) => state.level,
-        isGameOver: (state) => state.gameOver,
     },
     actions: {
+        setGameState(state) {
+            this.gameState = state;
+        },
         setTextures(textures) {
             this.textures = textures;
         },
         reduceLife() {
             this.life--;
-            if (this.life <= 0) this.gameOver = true;
+            if (this.life <= 0) this.gameState = GameState.End;
         },
         addScore(number) {
             this.score += number;
@@ -38,7 +42,7 @@ export const useStore = defineStore('game', {
             this.life = this.maxLife;
             this.score = 0;
             this.level = 1;
-            this.gameOver = false;
+            this.gameState = GameState.Start;
         },
     },
 });
