@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
+        "rootDir": ".",
         "target": "ESNext",
         "useDefineForClassFields": true,
         "module": "ESNext",
@@ -14,13 +16,8 @@
             "@/*": ["./src/*"]
         },
         "lib": ["ESNext", "DOM"],
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "typeRoots": ["./src/types"]
     },
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.d.ts",
-        "src/**/*.tsx",
-        "src/**/*.vue",
-        "src/**/*.json"
-    ]
+    "include": ["src/**/*"]
 }

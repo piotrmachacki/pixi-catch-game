@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { useScreen } from 'vue3-pixi';
-import { GameState } from '@/types';
+import { GameState } from '@/types/types';
 import gameLogo from '@/assets/images/gameLogo.png';
 import playBtn from '@/assets/images/playBtn.png';
 

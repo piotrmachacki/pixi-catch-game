@@ -13,7 +13,7 @@ export default defineConfig({
         target: 'esnext',
     },
     resolve: {
-        extensions: ['.js', '.ts', '.tsx', '.json', '.vue', '.jsx'],
+        extensions: ['.js', '.ts', '.tsx', '.json', '.vue', '.jsx', '.d.ts'],
         alias: {
             '@': path.resolve(__dirname, './src'),
         },

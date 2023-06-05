@@ -16,7 +16,7 @@ import { useScreen, useApplication } from 'vue3-pixi';
 
 import playerSprite from '@/assets/images/playerSprite.png';
 
-import { CharacterState } from '@/types';
+import { CharacterState } from '@/types/types';
 
 import { setNumberInRange } from '@/utils';
 

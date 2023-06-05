@@ -42,3 +42,5 @@ export const useStore = defineStore('game', {
         },
     },
 });
+
+export default useStore;

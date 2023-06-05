@@ -19,7 +19,7 @@ import { ref, computed } from 'vue';
 import { Stage, Assets, AssetsResolvers, useScreen } from 'vue3-pixi';
 
 import { useStore } from '@/store';
-import { GameState } from '@/types';
+import { GameState } from '@/types/types';
 
 import StartView from '@/scenes/StartScene.vue';
 import GameView from '@/scenes/GameScene.vue';

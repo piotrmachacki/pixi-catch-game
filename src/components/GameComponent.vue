@@ -13,7 +13,7 @@ import { Rectangle } from 'pixi.js';
 import { useApplication } from 'vue3-pixi';
 import { storeToRefs } from 'pinia';
 import { useStore } from '@/store';
-import { GameState } from '@/types';
+import { GameState } from '@/types/types';
 
 import PlayerEntity from '@/entities/PlayerEntity.vue';
 import FoodsEntity from '@/entities/FoodsEntity.vue';

@@ -13,6 +13,8 @@ import { BaseTexture, Rectangle, Texture } from 'pixi.js';
 import { useScreen, useApplication } from 'vue3-pixi';
 import { useStore } from '@/store';
 
+import { BoundsType, FallingFoodType } from '@/types/types';
+
 import { getRandomInt, setNumberInRange } from '@/utils';
 
 import foodSprite from '@/assets/images/foodSprite.png';
@@ -22,23 +24,6 @@ const store = useStore();
 const screen = useScreen();
 const pixiApp = useApplication();
 const desiredObjectCount = 10;
-
-
-interface BoundsType {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-}
-
-interface FallingFoodType {
-    id: number;
-    texture: TextureType;
-    x: number;
-    y: number;
-    speed: number;
-    getBounds: () => BoundsType;
-}
 
 const foodTexture = BaseTexture.from(foodSprite);
 
