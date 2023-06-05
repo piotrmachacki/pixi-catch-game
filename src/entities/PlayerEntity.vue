@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import type { Resource as ResourceType, Texture as TextureType } from 'pixi.js';
-import { ref, onMounted, Ref as RefType } from 'vue';
+import { ref, onMounted, onBeforeUnmount, Ref as RefType } from 'vue';
 import { useMagicKeys } from '@vueuse/core';
 import { BaseTexture, Rectangle, Texture } from 'pixi.js';
 import { useScreen, useApplication } from 'vue3-pixi';
@@ -69,20 +69,26 @@ const setCharacterXPosition = (x: number) => {
     characterX.value = setNumberInRange(characterX.value + x, 30, screen.value.width - 30);
 };
 
+function initControls() {
+    if (arrowleft.value) {
+        characterState.value = CharacterState.MoveLeft;
+        setCharacterXPosition(-characterSpeed);
+    }
+    if (arrowright.value) {
+        characterState.value = CharacterState.MoveRight;
+        setCharacterXPosition(characterSpeed);
+    }
+    if (!arrowleft.value && !arrowright.value) {
+        characterState.value = CharacterState.Stay;
+    }
+}
+
 onMounted(() => {
-    pixiApp.value?.ticker.add(() => {
-        if (arrowleft.value) {
-            characterState.value = CharacterState.MoveLeft;
-            setCharacterXPosition(-characterSpeed);
-        }
-        if (arrowright.value) {
-            characterState.value = CharacterState.MoveRight;
-            setCharacterXPosition(characterSpeed);
-        }
-        if (!arrowleft.value && !arrowright.value) {
-            characterState.value = CharacterState.Stay;
-        }
-    });
+    pixiApp.value?.ticker.add(initControls);
+});
+
+onBeforeUnmount(() => {
+    pixiApp.value?.ticker.remove(initControls);
 });
 
 function getBounds() {

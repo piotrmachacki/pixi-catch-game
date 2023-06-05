@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import type { Texture as TextureType } from 'pixi.js';
-import { ref, onMounted, Ref as RefType } from 'vue';
+import { ref, onMounted, onBeforeUnmount, Ref as RefType } from 'vue';
 import { BaseTexture, Rectangle, Texture } from 'pixi.js';
 import { useScreen, useApplication } from 'vue3-pixi';
 import { useStore } from '@/store';
@@ -81,6 +81,10 @@ const updateFallingFoods = (): void => {
 
 onMounted(() => {
     pixiApp.value?.ticker.add(updateFallingFoods);
+});
+
+onBeforeUnmount(() => {
+    pixiApp.value?.ticker.remove(updateFallingFoods);
 });
 
 defineExpose({ foods: fallingFoods });

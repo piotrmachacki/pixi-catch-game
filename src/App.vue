@@ -18,6 +18,7 @@
 import { ref, computed } from 'vue';
 import { Stage, Assets, AssetsResolvers, useScreen } from 'vue3-pixi';
 
+import { useStore } from '@/store';
 import { GameState } from '@/types';
 
 import StartView from '@/scenes/StartScene.vue';
@@ -25,6 +26,7 @@ import GameView from '@/scenes/GameScene.vue';
 import EndView from '@/scenes/EndScene.vue';
 
 const screen = useScreen();
+const store = useStore();
 
 const resolves: AssetsResolvers = {
     gameBg: import('@/assets/images/gameBg.jpg'),
@@ -47,6 +49,7 @@ const ComponentView = computed(() => {
 
 function handleChangeGameState(state: GameState) {
     gameState.value = state;
+    if (gameState.value === GameState.Playing) store.startNewGame();
 }
 
 </script>

@@ -1,5 +1,6 @@
 <template>
     <container>
+        <HUDComponent ref="hudComponent" />
         <PlayerEntity ref="playerElement" />
         <FoodsEntity ref="foodsElement" />
     </container>
@@ -8,7 +9,7 @@
 
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { Rectangle } from 'pixi.js';
 import { useApplication } from 'vue3-pixi';
 import { storeToRefs } from 'pinia';
@@ -17,6 +18,7 @@ import { GameState } from '@/types';
 
 import PlayerEntity from '@/entities/PlayerEntity.vue';
 import FoodsEntity from '@/entities/FoodsEntity.vue';
+import HUDComponent from '@/components/HUDComponent.vue';
 
 const store = useStore();
 
@@ -47,6 +49,10 @@ function checkCollision() {
 
 onMounted(() => {
     pixiApp.value?.ticker.add(checkCollision);
+});
+
+onBeforeUnmount(() => {
+    pixiApp.value?.ticker.remove(checkCollision);
 });
 
 const emit = defineEmits<{
