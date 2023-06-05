@@ -42,7 +42,7 @@ const spawnFallingFood = (): void => {
         x: setNumberInRange(Math.random() * screen.value.width, 16, screen.value.width - 16),
         y: -(getRandomInt(50, 500)), // Start position above the screen,
         speed: Math.random() * 1 + 0.5,
-        getBounds(): BoundsType { return { x: this.x - 16, y: this.y - 16, width: this.texture.width, height: this.texture.height }; }
+        getBounds(): BoundsType { return { x: this.x - 16, y: this.y - 16, width: this.texture.width, height: this.texture.height, center: { x: this.x, y: this.y } }; }
 
     };
     fallingFoods.value.push(foodObject);

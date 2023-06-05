@@ -3,6 +3,7 @@
         <PlayerEntity ref="playerElement" />
         <FoodsEntity ref="foodsElement" @hitFloor="setExplosion" />
         <ExplosionsEntity ref="explosionsEntity" />
+        <CoinsEntity ref="coinsEntity" />
     </container>
 </template>
 
@@ -14,17 +15,20 @@ import { Rectangle } from 'pixi.js';
 import { useApplication } from 'vue3-pixi';
 import { useStore } from '@/store';
 
-import { ExplosionType } from '@/types/types';
+import { ExplosionType, CoinType } from '@/types/types';
 
 import PlayerEntity from '@/entities/PlayerEntity.vue';
 import FoodsEntity from '@/entities/FoodsEntity.vue';
 import ExplosionsEntity from '@/entities/ExplosionsEntity.vue';
+import CoinsEntity from '@/entities/CoinsEntity.vue';
+import { uuid } from '@/utils';
 
 const store = useStore();
 
 const playerElement = ref<InstanceType<typeof PlayerEntity> | null>(null);
 const foodsElement = ref<InstanceType<typeof FoodsEntity> | null>(null);
 const explosionsEntity = ref<InstanceType<typeof ExplosionsEntity> | null>(null);
+const coinsEntity = ref<InstanceType<typeof CoinsEntity> | null>(null);
 
 const pixiApp = useApplication();
 
@@ -43,6 +47,7 @@ function checkCollision() {
         if (rectangleCharacter.intersects(rectangleFoot)) {
             foodsElement.value.foods.splice(i, 1); // Remove the object from the array
             store.addScore(1);
+            setCoin({ id: uuid('coin'), ...foodObject.getBounds().center });
         }
     }
 }
@@ -57,6 +62,10 @@ onBeforeUnmount(() => {
 
 function setExplosion(data: ExplosionType) {
     explosionsEntity.value?.explosions.push(data);
+}
+
+function setCoin(data: CoinType) {
+    coinsEntity.value?.coins.push(data);
 }
 
 </script>

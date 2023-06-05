@@ -15,6 +15,10 @@ export interface BoundsType {
     y: number;
     width: number;
     height: number;
+    center: {
+        x: number;
+        y: number;
+    };
 }
 
 export interface FallingFoodType {
@@ -27,6 +31,12 @@ export interface FallingFoodType {
 }
 
 export interface ExplosionType {
+    id: string;
+    x: number;
+    y: number;
+}
+
+export interface CoinType {
     id: string;
     x: number;
     y: number;

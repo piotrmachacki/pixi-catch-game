@@ -37,6 +37,7 @@ const resolves: AssetsResolvers = {
     playerSprite: import('@/assets/images/playerSprite.png'),
     playBtn: import('@/assets/images/playBtn.png'),
     gameLogo: import('@/assets/images/gameLogo.png'),
+    coinSprite: import('@/assets/images/coinSprite.png'),
 };
 
 const { gameState } = storeToRefs(store);
