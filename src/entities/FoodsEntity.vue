@@ -1,6 +1,7 @@
 <template>
     <container>
         <sprite v-for="object in fallingFoods" :key="object.id" :texture="object.texture" :x="object.x" :y="object.y" :anchor="0.5" />
+        <animated-sprite v-for="(explosion, index) in explosions" :key="explosion.id" :visible="true" :textures="explosionFrames" :x="explosion.x" :y="explosion.y" :play="true" :anchor="0.5" :animation-speed="1" :loop="false" @onComplete="removeExplosion(index)" />
     </container>
 </template>
 
@@ -15,6 +16,7 @@ import { useStore } from '@/store';
 import { getRandomInt, setNumberInRange } from '@/utils';
 
 import foodSprite from '@/assets/images/foodSprite.png';
+import explosionSprite from '@/assets/images/explosionSprite.png';
 
 const store = useStore();
 const screen = useScreen();
@@ -46,6 +48,22 @@ for (let i = 0; i < 23; i++) {
     foodFrames.push(frame);
 }
 
+const explosionTexture = BaseTexture.from(explosionSprite);
+
+let explosionFrames: TextureType[] = [];
+for (let j = 0; j < 4; j++) {
+    for (let i = 0; i < 4; i++) {
+        let frame: TextureType = new Texture(explosionTexture, new Rectangle(i * 32, j * 32, 32, 32));
+        explosionFrames.push(frame);
+    }
+}
+
+function removeExplosion(i) {
+    explosions.value.splice(i, 1); // Remove the object from the array
+}
+
+const explosions = ref([]);
+
 const fallingFoods: RefType<FallingFoodType[]> = ref([]);
 
 const spawnFallingFood = (): void => {
@@ -67,6 +85,8 @@ const updateFallingFoods = (): void => {
 
         // Check if the object has reached the bottom of the screen
         if (object.y > screen.value.height - 32) {
+            const explosion = { id: Math.random(), x: object.x, y: object.y };
+            explosions.value.push(explosion);
             fallingFoods.value.splice(i, 1); // Remove the object from the array
             store.reduceLife();
         }
