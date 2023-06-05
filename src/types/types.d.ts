@@ -25,3 +25,9 @@ interface FallingFoodType {
     speed: number;
     getBounds: () => BoundsType;
 }
+
+interface ExplosionType {
+    id: number;
+    x: number;
+    y: number;
+}
