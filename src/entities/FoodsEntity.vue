@@ -14,7 +14,7 @@ import { useStore } from '@/store';
 
 import { BoundsType, FallingFoodType } from '@/types/types';
 
-import { getRandomInt, setNumberInRange, uuid } from '@/utils';
+import { getRandomInt, getRandomNumber, setNumberInRange, uuid } from '@/utils';
 
 const store = useStore();
 const screen = useScreen();
@@ -36,12 +36,14 @@ for (let i = 0; i < 23; i++) {
 const fallingFoods: RefType<FallingFoodType[]> = ref([]);
 
 const spawnFallingFood = (): void => {
+    const minSpeed: number = store.getLevel * 0.5;
+    const maxSpeed: number = minSpeed + 1;
     const foodObject = {
         id: uuid('food'),
         texture: foodFrames[getRandomInt(0, foodFrames.length - 1)],
         x: setNumberInRange(Math.random() * screen.value.width, 16, screen.value.width - 16),
         y: -(getRandomInt(50, 500)), // Start position above the screen,
-        speed: Math.random() * 1 + 0.5,
+        speed: getRandomNumber(minSpeed, maxSpeed),
         getBounds(): BoundsType { return { x: this.x - 16, y: this.y - 16, width: this.texture.width, height: this.texture.height, center: { x: this.x, y: this.y } }; }
 
     };
