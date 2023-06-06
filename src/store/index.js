@@ -3,7 +3,7 @@ import { GameState } from '@/types/types';
 
 export const useStore = defineStore('game', {
     state: () => {
-        const MAX_LIFE = 3;
+        const MAX_LIFE = 10;
         return {
             gameState: GameState.Start,
             textures: null,
