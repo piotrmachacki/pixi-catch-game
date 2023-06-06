@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import { GameState } from '@/types/types';
 import { Texture as TextureType, Resource as ResourceType } from 'pixi.js';
 
+const STORAGE_PREFIX = 'pixi-catch-game__';
+
 interface State {
     gameState: GameState;
     textures: Record<string, TextureType<ResourceType>> | null;
@@ -21,7 +23,7 @@ export const useStore = defineStore('game', {
             maxLife: MAX_LIFE,
             life: MAX_LIFE,
             score: 0,
-            highScore: 0,
+            highScore: Number.parseInt(window.localStorage.getItem(`${STORAGE_PREFIX}highScore`) || '0'),
             level: 1,
         };
     },
@@ -48,7 +50,10 @@ export const useStore = defineStore('game', {
         },
         addScore(number: number) {
             this.score += number;
-            if (this.score > this.highScore) this.highScore = this.score;
+            if (this.score > this.highScore) {
+                this.highScore = this.score;
+                window.localStorage.setItem(`${STORAGE_PREFIX}highScore`, this.highScore.toString());
+            }
         },
         increaseLevel() {
             this.level++;
