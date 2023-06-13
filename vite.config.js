@@ -5,7 +5,7 @@ import { transformAssetUrls } from 'vue3-pixi';
 import { isCustomElement } from '@vue-pixi/renderer/dist/compiler.js';
 
 export default defineConfig({
-    base: '/',
+    base: './',
     server: {
         port: 5000,
     },
